@@ -57,4 +57,30 @@ public HashMap<String, String> checkUser(String email, String password) {
 		}
 		return false;
 	}
+public boolean checkAdmin(String email, String password) {
+		
+		try {
+			ResultSet rs=st.executeQuery("select * from admin where email='"+email+"' and password='"+password+"'");
+			if(rs.next())
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean changeAdminPassword(String email, String password) {
+
+		try {
+			ResultSet rs=st.executeQuery("select * from admin where email='"+email+"'");
+			if(!rs.next()) {
+				return false;
+			}
+			st.execute("update admin set password='"+password+"' where email='"+email+"'");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
